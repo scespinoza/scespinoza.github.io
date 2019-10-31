@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300');
+
+body {
+    background-image: radial-gradient(#1d0068, #248ca6);
+}
+
+
+h1 {
+    font-family: Roboto;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px;
+}
+svg {
+    margin: auto;
+    background-color:#8ce8ff11;
+}
+
+#grid {
+    text-align: center;
+}
+#side-bar {
+    text-align: center;
+}
+
+button {
+    background-color: #00b554;
+    font-family: Roboto;
+    font: bold;
+    font-size: 16px;
+    color: whitesmoke;
+    padding: 5px 20px;
+    margin: 10px 20px;
+    border: none;
+    border-radius: 8px;
+}
+rect {
+    stroke: black;
+    stroke-width: 1px;
+    margin: 0;
+    border-radius: 10px;
+}
+rect:hover {
+    fill: orange;
+}
+.container {
+    display: flex;
+}
+.fixed {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    width: 30%;
+}
+.flex-item {
+    flex-grow: 1;
+}
+
+.dead {
+    fill: none;
+}
+
+.alive {
+    fill: whitesmoke;
+}
+
+
