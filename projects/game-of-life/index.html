@@ -12,12 +12,21 @@
     
     <div class="container">
     <div id='side-bar' class="fixed">
-        <h1>Control Panel</h1>
-        <button onclick="setup()">Setup</button>
-        <button>Play</button>
+        <h1>The Game of Life</h1>
+        <p id="description">
+            The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970.
+            The game is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input. 
+            One interacts with the Game of Life by creating an initial configuration and observing how it evolves, or, for advanced players, by creating patterns with particular properties. 
+            <a target="_blank" href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Wiki</a>
+        </p>
+        <button id="setup-button" onclick="setupController()">SETUP</button>
+        <button id="controller-button" onclick="playController()">PLAY</button>
+        <br>
+        <button onclick="tick()">TICK</button>
+        <button onclick="loadShape()">LOAD SHAPE</button>
     </div>
     <div id="grid" class="flex-item">
-            <h1>The Game of Life</h1>
+            
     </div>
     </div>
     <script type='text/javascript' src="main.js"></script>

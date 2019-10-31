@@ -2,11 +2,15 @@
 
 body {
     background-image: radial-gradient(#1d0068, #248ca6);
+    font-family: Roboto;
 }
 
+a {
+    color: white;
+    text-align: center;
+}
 
 h1 {
-    font-family: Roboto;
     color: white;
     font-weight: bold;
     text-align: center;
@@ -23,29 +27,39 @@ svg {
 #side-bar {
     text-align: center;
 }
+#description {
+    color: white;
+    font-size: 14px;
+    text-align: justify;
+    padding: 20px 10px;
+}
 
 button {
     background-color: #00b554;
-    font-family: Roboto;
-    font: bold;
-    font-size: 16px;
+    font-weight: 200;
+    font-size: 14px;
     color: whitesmoke;
     padding: 5px 20px;
     margin: 10px 20px;
     border: none;
-    border-radius: 8px;
+    border-radius: 5em;
+    cursor: pointer;
+}
+button:hover {
+    color: white;
+    background-color: #00a04a;
 }
 rect {
-    stroke: black;
-    stroke-width: 1px;
+    stroke: rgb(39, 39, 39);
+    stroke-width: 0px;
     margin: 0;
-    border-radius: 10px;
 }
 rect:hover {
     fill: orange;
 }
 .container {
     display: flex;
+    margin: 0 auto;
 }
 .fixed {
     background-color: rgba(0, 0, 0, 0.15);
@@ -57,7 +71,7 @@ rect:hover {
 }
 
 .dead {
-    fill: none;
+    fill: rgba(0, 0, 0, 0.3);
 }
 
 .alive {
