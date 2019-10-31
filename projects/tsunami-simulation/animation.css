@@ -1,0 +1,50 @@
+
+#mapwrapper {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+
+}
+
+#map {
+    height: 100%;
+}
+
+
+svg {
+    position: relative;
+}
+
+.point_static {
+    fill: #f7c136;
+    opacity: 0.1;
+
+}
+
+.point_moving {
+    fill: red;
+    opacity: 0.3;
+
+}
+
+.meeting_point {
+    fill: #47a0ff;
+    opacity: 0.4;
+    cursor: pointer;
+}
+
+.street {
+    stroke: yellow;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    fill: none;
+    opacity: 0.1; /* Changed on the code */
+}
+
+.safezone {
+    stroke: #43e6d2;
+    stroke-dasharray: 5;
+    stroke-width: 2px;
+    fill: none;
+    opacity: 0.3;
+}

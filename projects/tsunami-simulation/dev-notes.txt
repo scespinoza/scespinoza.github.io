@@ -1,0 +1,12 @@
+Antofagasta Visualization
+
+TODO:
+
+- Zoom DONE (Fix velocity on zooming)
+- Panning DONE
+- Delay of starting DONE(?)
+- Test stability (?) for ALL the dots
+- Fix Timer and speed ratio DONE
+- Reuse path already created DONE
+- Final points with demografical information
+- (@Yamil thinks) Huge refactoring is needed DONE 😬

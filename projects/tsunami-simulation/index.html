@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Unnecessary (?)-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- JS imports -->
+    <script type="text/javascript" src="d3/d3.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css' rel='stylesheet' />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <!-- Stylesheets-->
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="animation.css">
+
+    <title>Tsunami Escape Visualizer - Antofagasta</title>
+</head>
+
+<body>
+    <!-- Map Viewport -->
+    <div id="mapwrapper">
+        <div id="map"></div>
+    </div>
+    <div id="user-interface">
+        <div id="header">
+            <h1 id="title">Antofagasta Evacuation</h1>
+        </div>
+        <div id="timer-container">
+                <p class="top-sidebar-text">Time</p>
+                <h3 class="top-sidebar-text big" id="timer">00:00</h3>
+        </div>
+
+        <div id="meeting-point-info">
+            <p class="top-sidebar-text" id="meeting-point-id"></p>
+            <h3 class="top-sidebar-text big" id="saved-counter"></h3>
+        </div>
+        <div class="control-panel">
+                
+                <h3 class="sidebar-text">Velocity</h3>
+                <p class="sidebar-text" id="velocityDisplay">x10</p>
+                <input type="range" min="1" max="50" value="10" class="slider" id="simratio-slider"
+                    onchange="adjustVelocity()" autocomplete="off">
+
+                <div class="start-button" id="start-button" onclick="startAnimations();"></div>
+                
+        </div>
+        </div>
+
+        
+    </div>
+    <div class="loading-slide">
+            <div class="loading-text big" id="loading-text">Loading...</div>
+    </div>
+    
+    
+    <script type='text/javascript' src="main.js"></script>
+</body>
+
+</html>

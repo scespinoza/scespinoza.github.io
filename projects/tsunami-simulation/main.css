@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300');
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background-color: #EEE;
+    font-family: Roboto;
+}
+
+
+#sidebar {
+    height: 85%;
+    width: 15%;
+    background-color: none;    
+    display: block;
+    position: absolute;
+    top: 15%;
+}
+
+#title {
+    font-weight: 900;
+    font-size: 40px;
+    color: white;
+    padding: 2%;
+    margin: 0;
+}
+
+.slider {
+    background: white;
+    height: 1px;
+}
+
+.slider::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    background: white;
+    cursor: pointer;
+    border-color: white;
+    border-width: 2px;
+
+}
+
+#loader-svg {
+    display: block;
+    margin: auto;
+    top: 50%;
+}
+
+#timer {
+    margin: auto;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: solid;
+    border-width: 2px 0px 0px 0px;
+    border-color: white;
+    box-sizing: border-box;  
+}
+
+#header {
+    height: 15%;
+    width: 100%;
+    background-color: none;
+    position: absolute;
+}
+#top-sidebar {
+    height: 15%;
+    width: 100%;
+    background-color:none;
+}
+
+#timer-container {
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    left: 80%;
+}
+
+#meeting-point-info{
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    left:80%;
+    top: 20%;
+}
+.control-panel {
+    height: 25%;
+    top: 75%;
+    position: absolute;
+}
+
+.loading-slide {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-color: black;
+    opacity: 0.8;
+}
+.top-sidebar-text {
+    font-weight: bold;
+    color: white;
+    padding-top: 5px;
+    text-align: center;
+    margin: 10px;
+}
+
+.sidebar-text {
+    font-weight: bold;
+    color: white;
+    font-weight: bold;
+    padding-top: 5px;
+    text-align: center;
+    margin: 0;
+}
+
+.big {
+    font-size: 40px;
+    font-style: bold;
+
+}
+
+.loading-text {
+    margin: auto;
+    color: white;
+    font-weight: 300;
+    line-height: 30px;
+    opacity: 1;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.slider {
+    display: block;
+    margin: 10px 10px;
+}
+
+.start-button{
+    display: none;
+    margin: 30px auto;
+    width: 20px;
+    height: 20px;
+    border: solid;
+    box-sizing: border-box;
+    border-width: 10px 0px 10px 20px;
+    border-color: transparent transparent transparent white;
+    cursor: pointer;
+    background-color: none; 
+}
+
+.start-button:hover{
+    border-color: transparent transparent transparent #a7a7a7;
+}
