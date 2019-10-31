@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300');
+body {
+    font-family: Roboto
+}
+
+h1, h2 {
+    text-align: center;
+}
+p {
+    text-align: justify;
+    margin: 0px 100px;
+}
+a {
+    color: black;
+}
