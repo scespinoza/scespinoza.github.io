@@ -166,7 +166,7 @@ function setup (){
 
 function clear() {
     grid = buildGrid(N, M, empty=true);
-        representGrid(grid);
+    representGrid(grid);
 }
 
 function loadShape() {
