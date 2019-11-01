@@ -159,22 +159,14 @@ function playController() {
     }
 }
 
+function setup (){
+    grid = buildGrid(N, M);
+    representGrid(grid);
+}
 
-function setupController() {
-    if (!setupDone) {
-        grid = buildGrid(N, M);
+function clear() {
+    grid = buildGrid(N, M, empty=true);
         representGrid(grid);
-        setupDone = true;
-        d3.select("#setup-button")
-            .html("CLEAR");
-    }
-    else {
-        grid = buildGrid(N, M, empty=true);
-        representGrid(grid);
-        setupDone = false;
-        d3.select("#setup-button")
-            .html("SETUP");
-    }
 }
 
 function loadShape() {
