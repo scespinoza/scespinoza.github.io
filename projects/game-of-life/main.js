@@ -47,8 +47,8 @@ function interface() {
         .append("g")
         .append("rect")
         .attr("class", "dead")
-        .attr("rx", 4)
-        .attr("ry", 4)
+        .attr("rx", 15)
+        .attr("ry", 15)
         .attr("x", function(d){
             return d.x;
         })

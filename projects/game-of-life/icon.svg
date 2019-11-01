@@ -1,0 +1,7 @@
+<svg height="1024" width="1024" fill="teal">
+    <rect width="100%" height="100%" fill="teal" rx="100" ry="100" style="opacity:0.8"/>
+    <rect x="0" y="0" height="512" width="512" rx="100" ry="100" style="fill:white;"></rect>
+    <rect x="512" y="512" height="512" width="512" rx="100" ry="100" style="fill:white;"></rect>
+    <rect x="512" y="0" height="512" width="512" rx="100" ry="100" style="fill:orange;"></rect>
+    <rect x="0" y="512" height="512" width="512" rx="100" ry="100" style="fill:rgba(0,0,0,0.4);"></rect>
+</svg>
