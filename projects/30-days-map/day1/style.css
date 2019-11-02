@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300');
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background-color: #EEE;
+    font-family: Roboto;
+    color: white;
+}
+h2 {
+    text-align: center;
+    margin: auto 20px;
+}
+
+#mapwrapper {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+
+}
+
+#map {
+    height: 100%;
+    width:100%
+}
+
+#legend {
+    position: absolute;
+    height:80%;
+    width: 20%;
+    background-color: none;
+}
+
+#svg-legend{
+    height: 40%;
+    width: 100%;
+}
+#display {
+    height:60%;
+    width: 100%;
+    top: 40%;
+}
+
+circle {
+    cursor:pointer;
+    stroke-width: 1px;
+    opacity: 0.8;
+}
+circle:hover {
+    fill: orange;
+}
+.municipal{
+    fill: teal;
+}
+.subvencionado {
+    fill: yellowgreen;
+}
+.pagado {
+    fill: #fcea21;
+}
