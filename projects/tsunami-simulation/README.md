@@ -1,4 +1,4 @@
 # GeoJSViz
 JavaScript based visualizations for Geo-Referenced Data
 
-In collaboration with [@scespinoza]( https://github.com/scespinoza)
+In collaboration with [@yamilbknsu]( https://github.com/yamilbknsu)

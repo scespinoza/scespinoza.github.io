@@ -238,20 +238,24 @@ function animateShortestPath(circleObject, ipath) {
                         animateShortestPath(circleObject, ipath);
                     } else {
                         var meetingPointID = getMeetingPoint(actualPath.datum());
-                        d3.select(this)
-                            .attr("class", "household static")
+                        var thisMeetingPoint = d3.select("circle#mp-" + meetingPointID);
+                        thisMeetingPoint.datum().properties.count += 1;
+                        thisMeetingPoint
+                            .interrupt()
                             .transition()
-                            .duration(1000)
-                            .attr("fill", "green")
-                            .attr("r", 10)
-                            .attr("opacity", 0)
-                            .on("end", function() {
-                                d3.select("circle#mp-" + meetingPointID).datum().properties.count += 1;
-                                if (clickedMeetingPoint == meetingPointID) {
-                                    displayMeetingPointInfo(meetingPointID);
-                                }
-                                d3.select(this).remove();
-                            });
+                            .duration(250)
+                            .ease(d3.easeLinear)
+                            .attr("r", 7)
+                            .transition()
+                            .duration(250)
+                            .ease(d3.easeLinear)
+                            .attr("r", 5);
+
+                        if (clickedMeetingPoint == meetingPointID) {
+                            displayMeetingPointInfo(meetingPointID);
+                        }
+                        d3.select(this).remove();
+                            
                     }           
                 })
 }
