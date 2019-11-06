@@ -1,31 +1,118 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:300');
+* {
+    margin: 0;
+    font-family: sans-serif;
+}
 
-html,
-body {
+#mapwrapper {
     height: 100%;
     width: 100%;
-    margin: 0;
-    background-color: #EEE;
-    font-family: Roboto;
-}
-
-
-#sidebar {
-    height: 85%;
-    width: 15%;
-    background-color: none;    
-    display: block;
     position: absolute;
-    top: 15%;
+
+}
+
+#map {
+    height: 100%;
+}
+
+#timer {
+    color: white;
+    margin: auto;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: solid;
+    border-width: 2px 0px 0px 0px;
+    border-color: white;
+    box-sizing: border-box; 
+    font-size: 20px; 
+}
+
+#timer-container {
+    text-align: center;
+    position: absolute;
+    width: 25%;
+    height: 20%;
+    top: 1em;
+    right: 0px;
+}
+#control-panel {
+    position: absolute;
+    left: 10px;
+    bottom: 3em;
+    color:white;
+    
 }
 
 
+.control-panel-text{
+    font-weight: bold;
+    letter-spacing: 0.4em;
+    color:white;
+    font-size:14px;
+    margin-right: 10px;
+    font-weight: normal;
+}
+.big {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+#play-controller {
+    display: inline-block;
+    bottom: 3em;
+    left: 10px;
+    width: 80px;
+    height: 30px;
+    cursor:pointer;
+    letter-spacing: 0.4em;
+    border: solid;
+    border-color:white;
+    color:white;
+    border-radius: 1rem;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#play-controller:hover {
+    color: #333;
+    background-color: #fff;
+}
+
+#velocity-label {
+    display: inline-block;
+}
+#velocity-display {
+    display: inline-block;
+    cursor: default;
+    letter-spacing: 0.1em;
+}
 #title {
-    font-weight: 900;
-    font-size: 40px;
+    position: absolute;
+    left: 1em;
+    top: 1em;
+    font-size: 24px;
     color: white;
-    padding: 2%;
-    margin: 0;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    max-width: 70%;
+}
+svg {
+    position: relative;
+}
+
+#meeting-point-info {
+    position: absolute;
+    letter-spacing: 0.2em;
+    bottom: 6em;
+    left: 10px;
+    color: white;
+    padding: 0.4em;
+}
+
+#meeting-point-id {
+    font-size: 18px;
+    line-height: 20px;
+    margin: 5px 0px;
 }
 
 .slider {
@@ -43,116 +130,12 @@ body {
 
 }
 
-#loader-svg {
-    display: block;
-    margin: auto;
-    top: 50%;
-}
-
-#timer {
-    margin: auto;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border: solid;
-    border-width: 2px 0px 0px 0px;
-    border-color: white;
-    box-sizing: border-box;  
-}
-
-#header {
-    height: 15%;
-    width: 100%;
-    background-color: none;
-    position: absolute;
-}
-#top-sidebar {
-    height: 15%;
-    width: 100%;
-    background-color:none;
-}
-
-#timer-container {
-    position: absolute;
-    width: 20%;
-    height: 20%;
-    left: 80%;
-}
-
-#meeting-point-info{
-    position: absolute;
-    width: 20%;
-    height: 20%;
-    left:80%;
-    top: 20%;
-}
-.control-panel {
-    height: 25%;
-    top: 75%;
-    position: absolute;
-}
-
-.loading-slide {
-    height: 100%;
-    width: 100%;
-    position: relative;
-    background-color: black;
-    opacity: 0.8;
-}
-.top-sidebar-text {
-    font-weight: bold;
-    color: white;
-    padding-top: 5px;
-    text-align: center;
-    margin: 10px;
-}
-
-.sidebar-text {
-    font-weight: bold;
-    color: white;
-    font-weight: bold;
-    padding-top: 5px;
-    text-align: center;
-    margin: 0;
-}
-
-.big {
-    font-size: 40px;
-    font-style: bold;
-
-}
-
-.loading-text {
-    margin: auto;
-    color: white;
-    font-weight: 300;
-    line-height: 30px;
-    opacity: 1;
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-}
-
-.slider {
-    display: block;
-    margin: 10px 10px;
-}
-
-.start-button{
-    display: none;
-    margin: 30px auto;
-    width: 20px;
-    height: 20px;
-    border: solid;
-    box-sizing: border-box;
-    border-width: 10px 0px 10px 20px;
-    border-color: transparent transparent transparent white;
+.slider::-webkit-slider-thumb {
+    width: 10px;
+    height: 10px;
+    background: white;
     cursor: pointer;
-    background-color: none; 
-}
+    border-color: white;
+    border-width: 2px;
 
-.start-button:hover{
-    border-color: transparent transparent transparent #a7a7a7;
 }

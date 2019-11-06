@@ -13,7 +13,8 @@ let outerBounds = {
 d3.json('data/simce_geo_conce.geojson').then( function (collection) {
 
     var map = L.map('map', {
-        zoomControl: false
+        zoomControl: false,
+        dragging: !L.Browser.mobile
     }).setView([-36.8194261,-73.184521], 11);
     
     L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
@@ -69,7 +70,6 @@ d3.json('data/simce_geo_conce.geojson').then( function (collection) {
                     return 'translate(' + p.x + ', ' + p.y + ')'
                 })
                 .on("click", function(d) {
-                    console.log(d.properties.NOMBRE_RBD);
                     d3.select("#nombre-establecimiento")
                         .html(d.properties.NOMBRE_RBD);
                     d3.select("#puntaje-matematica")
@@ -83,8 +83,6 @@ d3.json('data/simce_geo_conce.geojson').then( function (collection) {
     reset();
     function reset() {
         var bounds = d3Path.bounds(outerBounds);
-        console.log(mapBounds);
-        console.log(bounds);
         var topLeft = bounds[0];
         var bottomRight = bounds[1];
     
@@ -102,13 +100,7 @@ d3.json('data/simce_geo_conce.geojson').then( function (collection) {
                 return 'translate(' + p.x + ', ' + p.y + ')';
             });
 
-        }
-    
-        var svgLegend = d3.select("div#legend")
-                        .append("svg")
-                        .attr("id", "svg-legend")
-
-        
+        }        
       
 })
 

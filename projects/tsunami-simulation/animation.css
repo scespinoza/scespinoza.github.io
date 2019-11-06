@@ -1,50 +1,36 @@
-
-#mapwrapper {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-
+.safezone {
+    stroke:teal;
+    stroke-width: 1px;
+    fill: none;
 }
 
-#map {
-    height: 100%;
-}
-
-
-svg {
-    position: relative;
-}
-
-.point_static {
-    fill: #f7c136;
-    opacity: 0.1;
-
-}
-
-.point_moving {
-    fill: red;
-    opacity: 0.3;
-
-}
-
-.meeting_point {
-    fill: #47a0ff;
-    opacity: 0.4;
+.meeting-point {
+    
+    fill: green;
+    opacity: 0.5;
     cursor: pointer;
+}
+
+.meeting-point:hover {
+    transition: fill 0.5s ease
+                opacity 0.5s ease;
+    fill: orange;
+    opacity: 1;
 }
 
 .street {
     stroke: yellow;
-    stroke-width: 2px;
-    stroke-linecap: round;
+    stroke-width: 1px;
+    display: none;
+    opacity: 0.3;
     fill: none;
-    opacity: 0.1; /* Changed on the code */
 }
 
-.safezone {
-    stroke: #43e6d2;
-    stroke-dasharray: 5;
-    stroke-width: 2px;
-    fill: none;
+.moving {
+    fill: red;
     opacity: 0.3;
+}
+.static {
+    fill: yellow;
+    opacity: 0.01;
 }

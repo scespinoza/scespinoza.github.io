@@ -13,20 +13,38 @@
     <title>Promedios SIMCE 2018 Provincia de Concepción</title>
 </head>
 <body>  
-        
         <div id="mapwrapper">
+                
                 <div id="map"></div>
             </div>
-        <div id="user-interface">
             
-            <div id="legend" style="text-align:center; margin: auto 20px;">
-                    <h3>Promedios SIMCE 2018 4to Básico Provincia de Concepción</h3>
-                    <svg id="svg-legend"><circle cx="30" cy="30" r="10" class="municipal"></circle><text x="50" y="35" style="font-weight: bold; fill: white;">Municipal</text><circle cx="30" cy="70" r="10" class="subvencionado"></circle><text x="50" y="75" style="font-weight: bold; fill: white;">Subvencionado</text><circle cx="30" cy="110" r="10" class="pagado"></circle><text x="50" y="115" style="font-weight: bold; fill: white;">Pagado</text></svg>
-                    <div id="display">
+        <div id="user-interface">
+            <div class="header">
+                    <h2 style="margin:0px; padding:15px;">Promedios SIMCE 2018 4to Básico Gran Concepción</h3>
+            </div>
+            
+            <div id="display">
+                
+                    <div id="display-legend">
+                        <h3>Legend</h3>
+                    <div class="legend">
+                        
+                        <div class="circle-legend" id="legend-municipal"></div>
+                        <p class="text-legend">Municipal</p>
+                    </div>
+                    <div class="legend">
+                            <div class="circle-legend" id="legend-subvencionado"></div>
+                            <p class="text-legend">Subvencionado</p>
+                        </div>
+                    <div class="legend">
+                            <div class="circle-legend" id="legend-pagado"></div>
+                            <p class="text-legend">Pagado</p>
+                        </div>
+                    </div>
+                    <div id="display-puntaje">
                             <h3 id="nombre-establecimiento"></h3>
-                            <p id='puntaje-matematica'></p>
-                            <p id='puntaje-lenguaje'></p>
-                            <p></p>
+                            <p id='puntaje-matematica' class="puntaje"></p>
+                            <p id='puntaje-lenguaje' class="puntaje"></p>
                         </div>
                 </div>
 
