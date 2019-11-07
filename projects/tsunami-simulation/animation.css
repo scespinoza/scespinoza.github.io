@@ -2,13 +2,24 @@
     stroke:teal;
     stroke-width: 1px;
     fill: none;
+    z-index: 999;
 }
+
+.zone {
+    fill: none;
+    opacity: 0.3;
+    stroke-dasharray: 5px 5px;
+    stroke-width: 1px;
+    z-index: 0;
+}
+
 
 .meeting-point {
     
     fill: green;
     opacity: 0.5;
     cursor: pointer;
+    z-index: 999;
 }
 
 .meeting-point:hover {
@@ -21,9 +32,11 @@
 .street {
     stroke: yellow;
     stroke-width: 1px;
-    display: none;
-    opacity: 0.3;
     fill: none;
+    z-index: 999;
+}
+.household {
+    z-index: 999;
 }
 
 .moving {

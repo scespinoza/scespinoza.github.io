@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap');
+
 * {
     margin: 0;
-    font-family: sans-serif;
+    font-family: Roboto, sans-serif;
 }
 
 #mapwrapper {
@@ -14,15 +16,14 @@
     height: 100%;
 }
 
+
 #timer {
-    color: white;
     margin: auto;
     position: relative;
     width: 100%;
     height: 100%;
     border: solid;
     border-width: 2px 0px 0px 0px;
-    border-color: white;
     box-sizing: border-box; 
     font-size: 20px; 
 }
@@ -35,19 +36,27 @@
     top: 1em;
     right: 0px;
 }
+
+.top-block {
+    top: 4em;
+    left: 20px;
+}
+
+.switch-block {
+    position: absolute;
+    width: 200px;
+    
+}
 #control-panel {
     position: absolute;
-    left: 10px;
-    bottom: 3em;
-    color:white;
-    
+    left: 20px;
+    bottom: 3em;    
 }
 
 
 .control-panel-text{
     font-weight: bold;
     letter-spacing: 0.4em;
-    color:white;
     font-size:14px;
     margin-right: 10px;
     font-weight: normal;
@@ -61,19 +70,20 @@
 #play-controller {
     display: inline-block;
     bottom: 3em;
-    left: 10px;
     width: 80px;
     height: 30px;
     cursor:pointer;
     letter-spacing: 0.4em;
     border: solid;
-    border-color:white;
-    color:white;
     border-radius: 1rem;
     background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.5s ease,
+                color 0.5s ease;
 }
 
 #play-controller:hover {
+    transition: background-color 0.5s ease,
+                color 0.5s ease;
     color: #333;
     background-color: #fff;
 }
@@ -88,10 +98,9 @@
 }
 #title {
     position: absolute;
-    left: 1em;
+    left: 20px;
     top: 1em;
     font-size: 24px;
-    color: white;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     max-width: 70%;
@@ -105,7 +114,6 @@ svg {
     letter-spacing: 0.2em;
     bottom: 6em;
     left: 10px;
-    color: white;
     padding: 0.4em;
 }
 
@@ -115,27 +123,92 @@ svg {
     margin: 5px 0px;
 }
 
-.slider {
+.slider-dark {
     background: white;
     height: 1px;
 }
 
-.slider::-moz-range-thumb {
+.slider-dark::-moz-range-thumb {
     width: 10px;
     height: 10px;
     background: white;
     cursor: pointer;
-    border-color: white;
     border-width: 2px;
 
 }
 
-.slider::-webkit-slider-thumb {
+.slider-light {
+    background: black;
+    height: 1px;
+}
+
+.slider-light::-moz-range-thumb {
     width: 10px;
     height: 10px;
-    background: white;
+    background: black;
     cursor: pointer;
-    border-color: white;
     border-width: 2px;
 
 }
+
+.switch {
+   position: relative;
+   display: inline-block;
+   top: 4px;
+   width: 34px;
+   height: 19px; 
+}
+
+.switch input {
+    display: none;
+}
+
+.slider-switch {
+    margin: auto 0px;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color:rgba(0, 0, 0, 0.301);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider-switch:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 2px;
+    bottom: 2px;
+    background-color: black;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider-switch {
+    background-color:rgba(255, 255, 255, 0.336);
+}
+
+input:checked + .slider-switch:before {
+    -webkit-transform: translateX(15px);
+    -ms-transform: translateX(15px);
+    transform: translateX(15px);
+  }
+   
+
+.slider-switch.round {
+    border-radius: 34px;
+  }
+   
+  .slider-switch.round:before {
+    border-radius: 50%;
+  }
+
+  .small {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+}
+

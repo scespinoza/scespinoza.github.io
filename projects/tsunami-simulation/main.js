@@ -7,9 +7,12 @@ Array.prototype.last = function() {
 let meetingPointsCollection,
     safeZoneCollection,
     edgesCollection,
-    shortestPathsCollection;
+    shortestPathsCollection,
+    zonesCollection;
 // Global variables to project data
-let outerBounds,
+let darkLayer,
+    clearLayer,
+    outerBounds,
     transform,
     d3Path,
     map,
@@ -18,7 +21,8 @@ let outerBounds,
 // global variables for svg objects
 let safeZonePaths,
     meetingPoints,
-    householdPoints;
+    householdPoints,
+    zonesPolygons;
 
 let simRatio;
 let animating = false;
@@ -58,10 +62,16 @@ function loadMap() {
         zoomControl: false
     }).setView([-23.645377,-70.4056757], 14);
     
-    var tileURL = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
-    L.tileLayer(tileURL, {
+    darkTileURL = 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
+    clearTileURL = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
+    darkLayer = L.tileLayer(darkTileURL, {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-    }).addTo(map);
+    })
+    clearLayer = L.tileLayer(clearTileURL, {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+    })
+
+    map.addLayer(clearLayer);
     
     outerBounds = {
         type: "FeatureCollection",
@@ -154,12 +164,14 @@ function loadData() {
         d3.json('data/puntos_encuentro_antofa.geojson'),
         d3.json('data/safe_zone_antofagasta.geojson'),
         d3.json('data/antofa_edges.geojson'),
-        d3.json('data/shortest_paths.json')
+        d3.json('data/shortest_paths.json'),
+        d3.json('data/zones.json')
     ]).then(function(data) {
         meetingPointsCollection = data[0];
         safeZoneCollection = data[1];
         edgesCollection = data[2];
-        shortestPathsCollection = data[3].slice(0, 1000);
+        shortestPathsCollection = data[3].slice(0, 2000);
+        zonesCollection = data[4];
 
         edgesPaths = g.selectAll("path.street")
                     .data(edgesCollection.features)
@@ -168,14 +180,21 @@ function loadData() {
                     .attr("id", function(d) {
                         return "edge-" + d.properties.id;
                     })
-                    .attr("class", "street");
+                    .attr("class", "street")
+                    .style("opacity", 0);
 
         safeZonePaths = g.selectAll('path.safezone')
                     .data(safeZoneCollection.features)
                     .enter()
                     .append('path')
                     .attr('class', 'safezone');
-
+        
+        zonesPolygons = g.selectAll('path.zone')
+                    .data(zonesCollection.features)
+                    .enter()
+                    .append('path')
+                    .attr('class', 'zone');
+                    
         meetingPoints = g.selectAll('circle.meeting-point')
                         .data(meetingPointsCollection.features)
                         .enter()
@@ -211,7 +230,7 @@ function loadHouseholdPoints(shortestPaths) {
                                             var  p = firstPath.node().getPointAtLength(0);
                                         return 'translate(' + p.x + ', ' + p.y + ')';
                                         }    
-                                })   
+                                });
 }
 
 
@@ -276,7 +295,7 @@ function animation() {
                             }
                             
                         });
-        timerWorker.postMessage(["timerInit", simRatio]);
+        
 }
 
 function playController() {
@@ -319,4 +338,35 @@ function meetingPointInfoController(meetingPointID) {
         clickedMeetingPoint = meetingPointID;
     }
 
+}
+
+function changeColor(item) {
+    if (item.checked) {
+        console.log("dark interface")
+        d3.select("body").style("color", "white").style("border-color", "white");
+        d3.select("#play-controller").style("color", "white").style("border-color", "white");
+        d3.select("#simratio-slider").attr("class", "slider-dark");
+        d3.selectAll(".zone").style("stroke", "white");
+        map.removeLayer(clearLayer);
+        map.addLayer(darkLayer);
+    } else {
+        console.log("clear interface")
+        d3.select("body").style("color", "black").style("border-color", "black");
+        d3.select("#play-controller").style("color", "black").style("border-color", "black");
+        d3.select("#simratio-slider").attr("class", "slider-light");
+        d3.selectAll(".zone").style("stroke", "black");
+        map.removeLayer(darkLayer);
+        map.addLayer(clearLayer);
+    }
+
+}
+
+function showStreets(item) {
+    if (item.checked) {
+        d3.selectAll(".street")  
+            .style("opacity", 0.3);
+    } else {
+        d3.selectAll(".street")   
+                .style("opacity", 0);
+    }
 }
