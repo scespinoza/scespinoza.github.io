@@ -170,7 +170,7 @@ function loadData() {
         meetingPointsCollection = data[0];
         safeZoneCollection = data[1];
         edgesCollection = data[2];
-        shortestPathsCollection = data[3].slice(0, 2000);
+        shortestPathsCollection = data[3];
         zonesCollection = data[4];
 
         edgesPaths = g.selectAll("path.street")
