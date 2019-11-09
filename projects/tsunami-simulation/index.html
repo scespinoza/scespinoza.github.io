@@ -34,13 +34,24 @@
                     <input type="checkbox" onclick="changeColor(this);" autocomplete="off">
                     <div class="slider-switch round"></div>
                 </label>
+            </div>
             <div id="display-street" class="switch-block">
                     <span class="control-panel-text small">SHOW STREETS</span>
                     <label class="switch">
                         <input type="checkbox" onclick="showStreets(this);" autocomplete="off">
                         <div class="slider-switch round"></div>
                     </label>
-        </div>
+                </div>
+            <div id="select-zone" class="switch-block">
+                <span class="control-panel-text small">ZONE</span>
+                <select class="control-panel-text small" name="zone-selector" id="zone-selector" onchange="loadHouseholdPoints(this.value);" autocomplete="off">
+                    <option value="all">All</option>
+                    <option value="north">North</option>
+                    <option value="center">Center</option>
+                    <option value="south">South</option>
+                </select>
+            </div>
+        
         
         </div>
         <div id="meeting-point-info">
@@ -48,9 +59,11 @@
             <h3 id="saved-counter"></h3>
         </div>
         <div id="timer-container">
-                <span id="time-label" class="control-panel-text big">Time</p>
+                <span id="time-label" class="control-panel-text big">Time</span>
                 <h3 class="control-panel-text" id="timer">00:00</h3>
+                <div id="pie-chart"></div>
         </div>
+        
         <div id='control-panel'>
             <button id="play-controller" class="control-panel-text" onclick="playController()">PLAY</button>
             <span id="velocity-label" class="control-panel-text">VELOCITY</span>
