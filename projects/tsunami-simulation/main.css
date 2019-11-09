@@ -158,9 +158,10 @@ svg {
 }
 
 .switch {
-   position: relative;
+   position: absolute;
    display: inline-block;
    top: 4px;
+   left: 115px;
    width: 34px;
    height: 19px; 
 }
