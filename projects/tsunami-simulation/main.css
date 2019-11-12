@@ -72,10 +72,10 @@
 }
 
 
-#play-controller {
+.control-panel-button {
     display: inline-block;
     bottom: 3em;
-    width: 80px;
+    width: 90px;
     height: 30px;
     cursor:pointer;
     letter-spacing: 0.4em;
@@ -86,7 +86,7 @@
                 color 0.5s ease;
 }
 
-#play-controller:hover {
+.control-panel-button:hover {
     transition: background-color 0.5s ease,
                 color 0.5s ease;
     color: #333;

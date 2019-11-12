@@ -36,13 +36,21 @@ let pieForeground;
 loadMap();
 loadData();
 pieChart();
-map.on('viewreset', reset)
+map.on('viewreset', reset);
 
 
 function adjustVelocity() {
     document.getElementById("velocity-display").innerHTML = 'x' + document.getElementById("simratio-slider").value;
     simRatio = document.getElementById("simratio-slider").value;
-    timerWorker.postMessage(["updateRatio", simRatio]);
+    
+
+    if (animating){
+        pauseAnimation();
+        timerWorker.postMessage(["updateRatio", simRatio]);
+        resumeAnimation();
+    } else {
+        timerWorker.postMessage(["updateRatio", simRatio]);
+    }
 }
 
 // -- Worker script test --
@@ -75,7 +83,6 @@ function loadMap() {
     
     
     var tileURL = getTileURL('light_all');
-
     actualLayer = L.tileLayer(tileURL, {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     })
@@ -265,6 +272,9 @@ function loadData() {
 }
 
 
+
+
+
 function loadHouseholdPoints(zone) {
     console.log("load " + zone + " points");
     d3.selectAll('circle.household').remove();
@@ -276,14 +286,15 @@ function loadHouseholdPoints(zone) {
 
             shortestPathsCollection = collection;
             totalHouseholds = shortestPathsCollection.length;
-
-            
             householdPoints = g.selectAll('circle.household')
                                     .data(shortestPathsCollection)
                                     .enter()
                                     .append("circle")
                                     .attr("r", 1)
                                     .attr("class", "household static")
+                                    .attr("delayT", 0)
+                                    .attr("animT", 0)
+                                    .attr("ipath", 0)
                                     .attr("transform", function (d) {
                                             if (d.shortest_path.length > 0) {
                                                 var firstPath = d3.select("path#edge-" + d.shortest_path[0])
@@ -291,8 +302,7 @@ function loadHouseholdPoints(zone) {
                                             return 'translate(' + p.x + ', ' + p.y + ')';
                                             }    
                                     });
-        
-                                });            
+        });            
     }
     else {
         switch (zone) {
@@ -309,13 +319,15 @@ function loadHouseholdPoints(zone) {
         d3.json('data/shortest_path_zones.json').then(function(collection) {
             shortestPathsCollection = collection;
             totalHouseholds = shortestPathsCollection[zone].length;
-            
             householdPoints = g.selectAll('circle.household')
                                     .data(shortestPathsCollection[zone])
                                     .enter()
                                     .append("circle")
                                     .attr("r", 1)
                                     .attr("class", "household static")
+                                    .attr("delayT", 0)
+                                    .attr("animT", 0)
+                                    .attr("ipath", 0)
                                     .attr("transform", function (d) {
                                             if (d.shortest_path.length > 0) {
                                                 var firstPath = d3.select("path#edge-" + d.shortest_path[0])
@@ -323,11 +335,11 @@ function loadHouseholdPoints(zone) {
                                             return 'translate(' + p.x + ', ' + p.y + ')';
                                             }    
                                     });
-                                    
-        })
-            
+        });       
     }
+        
 }
+
 
 
 function animateShortestPath(circleObject, ipath) {
@@ -337,20 +349,26 @@ function animateShortestPath(circleObject, ipath) {
     circleObject.attr("r", 2)
                 .transition()
                 .duration(function () {
+                    var t = d3.select(this).attr("animT");
                     var velocity = 0.0015; // meters per ms
-                    return actualPath.datum().properties.length / (velocity * simRatio);
+                    return( 1 - t ) * actualPath.datum().properties.length / (velocity * simRatio);
                 })
                 .ease(d3.easeLinear)
+                .attr("animT", 1)
                 .attrTween("transform", function () {
-                    return function (t) {
-                        pathLength = actualPath.node().getTotalLength();
-                        p = actualPath.node().getPointAtLength(t * pathLength);
+                    var thisNode = this
+                    return function () {
+                        var t = d3.select(thisNode).attr("animT");
+                        var pathLength = actualPath.node().getTotalLength();
+                        var p = actualPath.node().getPointAtLength(t * pathLength);
                         return 'translate(' + p.x + ', ' + p.y + ')';
                     }
                 })
                 .on("end", function() {
                     if (ipath < circleObject.datum().shortest_path.length - 1) {
                         ipath += 1;
+                        d3.select(this).attr("animT", 0);
+                        d3.select(this).attr("ipath", ipath);
                         animateShortestPath(circleObject, ipath);
                     } else {
                         var meetingPointID = getMeetingPoint(actualPath.datum());
@@ -383,25 +401,29 @@ function animateShortestPath(circleObject, ipath) {
                 });
 }
 
-
-
-
-function animation() {
-        simRatio = document.getElementById("simratio-slider").value;
-        totalHouseholdsSaved = 0;
-        householdPoints.transition()
-                        .duration(function(d) {
-                            return d.delay / simRatio;
-                        })
-                        .on("end", function(d) {
-                            if (d.shortest_path.length > 0) {
-                                d3.select(this).attr("class", "household moving");
-                                animateShortestPath(d3.select(this), 0);
-                            }
-                            
-                        });
-        
+function pauseAnimation() {
+    animating = false;
+    householdPoints.interrupt()
+    d3.selectAll(".household.moving").attr("class", "household paused");
+    timerWorker.postMessage(["pauseTimer", simRatio]);
 }
+
+function resumeAnimation() {
+    animating = true;
+    d3.selectAll(".household.paused").attr("class", "household.moving");
+    householdPoints.transition()
+                    .attr("delayT", 1)
+                    .duration(function(d){
+                        return (1-d3.select(this).attr("delayT"))*d.delay/simRatio;
+                        }
+                    ).on("end", function(d) {
+                    if (d.shortest_path.length > 0) {
+                        d3.select(this).attr("class", "household moving");
+                        animateShortestPath(d3.select(this), parseInt(d3.select(this).attr("ipath")));
+                    }
+                });
+}
+
 
 function allHouseholdsSaved() {
     return totalHouseholdsSaved == totalHouseholds;
@@ -449,6 +471,35 @@ function meetingPointInfoController(meetingPointID) {
 
 }
 
+function pauseResumeController() {
+    if (animating) {
+        pauseAnimation();
+        d3.select("button#pause-controller").html("RESUME");
+    } else {
+        resumeAnimation();
+        d3.select("button#pause-controller").html("PAUSE");
+    }
+    
+}
+
+function animation() {
+        simRatio = document.getElementById("simratio-slider").value;
+        totalHouseholdsSaved = 0;
+        householdPoints.transition()
+                        .duration(function(d) {
+                            return d.delay / simRatio;
+                        })
+                        .attr("delayT", 1)
+                        .on("end", function(d) {
+                            if (d.shortest_path.length > 0) {
+                                d3.select(this).attr("class", "household moving");
+                                animateShortestPath(d3.select(this), 0);
+                            }
+                            
+                        });
+        
+}
+
 function changeColor(darkMode) {
     if(darkMode){
         d3.select("body").style("color", "white").style("border-color", "white");
@@ -477,9 +528,6 @@ function showStreets(item) {
     }
 }
 
-
-
- 
 
 function updateMap(item) {
     if (item.id == 'dark-check-box') {

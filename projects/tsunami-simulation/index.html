@@ -72,7 +72,8 @@
         </div>
         
         <div id='control-panel'>
-            <button id="play-controller" class="control-panel-text" onclick="playController()">PLAY</button>
+            <button id="play-controller" class="control-panel-text control-panel-button" onclick="playController()">PLAY</button>
+            <button id="pause-controller" class="control-panel-text control-panel-button" onclick="pauseResumeController()">PAUSE</button>
             <span id="velocity-label" class="control-panel-text">VELOCITY</span>
             
             <input type="range" min="1" max="50" value="10" class="slider-light" id="simratio-slider"
