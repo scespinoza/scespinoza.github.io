@@ -31,7 +31,7 @@
             <div id="interface-mode" class="switch-block top-block">
                 <span class="control-panel-text small">DARK MODE</span>
                 <label class="switch">
-                    <input type="checkbox" onclick="changeColor(this);" autocomplete="off">
+                    <input id="dark-check-box" type="checkbox" onclick="updateMap(this);" autocomplete="off">
                     <div class="slider-switch round"></div>
                 </label>
             </div>
@@ -42,6 +42,13 @@
                         <div class="slider-switch round"></div>
                     </label>
                 </div>
+            <div id="display-street-names" class="switch-block">
+                <span class="control-panel-text small">HIDE NAMES</span>
+                <label class="switch">
+                    <input id="names-check-box" type="checkbox" onclick="updateMap(this);" autocomplete="off">
+                    <div class="slider-switch round"></div>
+                </label>
+            </div>
             <div id="select-zone" class="switch-block">
                 <span class="control-panel-text small">ZONE</span>
                 <select class="control-panel-text small" name="zone-selector" id="zone-selector" onchange="loadHouseholdPoints(this.value);" autocomplete="off">
