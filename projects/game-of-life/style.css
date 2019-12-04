@@ -14,7 +14,10 @@ h1 {
     color: white;
     font-weight: bold;
     text-align: center;
-    margin: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+    font-size: 24px;
+    margin: 5px;
 }
 svg {
     margin: auto;
@@ -22,14 +25,18 @@ svg {
 
 #grid {
     text-align: center;
+    margin: 25px auto;   
 }
 #side-bar {
     text-align: center;
+    margin: 0 auto;
+    padding: 40px;
 }
 #description {
     color: white;
     font-size: 14px;
     text-align: justify;
+    line-height: 24px;
     padding: 20px 10px;
 }
 
@@ -45,8 +52,9 @@ button {
     cursor: pointer;
 }
 button:hover {
+    transition: opacity 0.5s;
     color: white;
-    background-color: #00a04a;
+    opacity: 0.4
 }
 rect {
     stroke: rgb(39, 39, 39);
@@ -58,15 +66,17 @@ rect:hover {
 }
 .container {
     display: flex;
-    margin: 0 auto;
+    padding: 0 auto;
+    align-items: center
 }
 .fixed {
     background-color: rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     width: 30%;
 }
-.flex-item {
-    flex-grow: 1;
+
+rect {
+    cursor: pointer;
 }
 
 .dead {

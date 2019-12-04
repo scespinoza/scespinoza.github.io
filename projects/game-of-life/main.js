@@ -115,7 +115,6 @@ function getNextGrid(grid) {
                 }
             } else {
                 if (neighbors[i][j] == 3) {
-                    console.log("new cell!");
                     nextGrid[i][j] = 1;
                 }
             }
@@ -127,7 +126,6 @@ function getNextGrid(grid) {
 
 
 function tick() {
-    console.log("newTick");
     let nextGrid = getNextGrid(grid);
     grid = [...nextGrid];
     representGrid(grid);
@@ -148,12 +146,14 @@ function playController() {
     if (!playing) {
         d3.select("#controller-button")
             .html("STOP")
+            .style("background-color", "red")
         playing = true;
         play();
     }
     else {
         d3.select("#controller-button")
             .html("PLAY")
+            .style("background-color", "#00b554")
         playing = false;
         stop();
     }
@@ -164,10 +164,7 @@ function setup (){
     representGrid(grid);
 }
 
-function clear() {
-    grid = buildGrid(N, M, empty=true);
-    representGrid(grid);
-}
+
 
 function loadShape() {
     d3.json("shapes.json").then(function(data) {
@@ -182,3 +179,8 @@ let playing = false;
 let setupDone = false;
 
 interface();
+
+function clearGrid() {
+    grid = buildGrid(N, M, empty=true);
+    representGrid(grid);
+}

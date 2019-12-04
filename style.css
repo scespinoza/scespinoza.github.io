@@ -1,15 +1,129 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300');
 body {
-    font-family: Roboto
+    font-family: Roboto;
 }
 
 h1, h2 {
     text-align: center;
+    text-transform: uppercase;
+    font-weight: 100;
+    letter-spacing: 0.2rem;
+    margin: 10px;
+
 }
 p {
     text-align: justify;
-    margin: 0px 100px;
+    font-size: 20px;
+    line-height: 32px;
+    color: #303030
 }
 a {
     color: black;
+    transition: color 0.5s;
+}
+
+
+.name {
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    font-weight: 100;
+    font-size: 24px;
+}
+
+.nav-list{
+    list-style: none;
+    margin: 20px auto;
+    padding: 0;
+}
+
+.nav-item {
+    transition: border-color 0.5s;
+    border: 1px solid black;
+    margin: 10px auto;
+    width: 150px;
+    padding: 5px;
+    border-radius: 2px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.nav-item:hover {
+    transition: border-color 0.3s;
+    border-color: teal;
+    cursor: pointer;
+}
+
+.nav-item:hover a {
+    transition: color 0.2s;
+    color: teal;
+}
+.list-link {
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.1rem;
+}
+
+#name-container {
+    margin: 10px;
+    border-bottom: 1px solid teal;
+}
+
+.sidebar-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 25%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.13);
+}
+.content {
+    position: absolute;
+    left: 25%;
+    padding: 80px 100px;
+}
+
+.content h1, h2 {
+    text-align: left;
+    padding: 0;
+    margin: 10px 0px;
+    color: #3f3f3f;
+}
+.content p {
+    color: #494949;
+}
+.sidebar-content {
+    position: absolute;
+    top: 30px;
+    left: 10%;
+    width: 80%;
+}
+
+.content-sep {
+    border-bottom: 1px solid teal;
+}
+
+#level{
+    margin: 20px 10px;
+    text-align: center;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+.content-list {
+    color: #3f3f3f
+}
+
+.content-list-item {
+    margin: 8px;
+}
+
+.content-list-item a {
+    letter-spacing: 0.15rem;
+    text-decoration: none;
+}
+
+.content-list-item:hover a {
+    letter-spacing: 0.15rem;
+    text-decoration: underline;
 }
