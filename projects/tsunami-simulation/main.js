@@ -284,7 +284,7 @@ function loadHouseholdPoints(zone) {
 
         d3.json('data/shortest_paths.json').then(function(collection) {
 
-            shortestPathsCollection = collection.slice(0, 100);
+            shortestPathsCollection = collection.slice(0, 2000);
             totalHouseholds = shortestPathsCollection.length;
             householdPoints = g.selectAll('circle.household')
                                     .data(shortestPathsCollection)
