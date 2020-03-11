@@ -1,0 +1,246 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap');
+
+* {
+    margin: 0;
+    font-family: Roboto, sans-serif;
+}
+
+#mapwrapper {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+
+}
+
+#map {
+    height: 100%;
+}
+
+
+#timer {
+    margin: auto;
+    position: relative;
+    width: 100%;
+    height: 25%;
+    border: solid;
+    border-width: 2px 0px 0px 0px;
+    box-sizing: border-box; 
+    font-size: 20px; 
+}
+
+#timer-container {
+    text-align: center;
+    position: absolute;
+    width: 25%;
+    height: 20%;
+    top: 1em;
+    right: 0px;
+}
+
+#switch-container {
+    top: 10%;
+    position: absolute;
+}
+
+
+.switch-block {
+    width: 200px;
+    height: 30px;
+    position:relative;
+    top: 4em;
+    left: 20px;
+    
+}
+
+#control-panel {
+    position: absolute;
+    left: 20px;
+    bottom: 2em;    
+}
+
+
+.control-panel-text{
+    font-weight: bold;
+    letter-spacing: 0.4em;
+    font-size:14px;
+    margin-right: 10px;
+    font-weight: normal;
+}
+.big {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+.control-panel-button {
+    display: inline-block;
+    bottom: 3em;
+    width: 90px;
+    height: 30px;
+    cursor:pointer;
+    letter-spacing: 0.4em;
+    border: solid;
+    border-radius: 1rem;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.5s ease,
+                color 0.5s ease;
+}
+
+.control-panel-button:hover {
+    transition: background-color 0.5s ease,
+                color 0.5s ease;
+    color: #333;
+    background-color: #fff;
+}
+
+#velocity-label {
+    display: inline-block;
+}
+#velocity-display {
+    display: inline-block;
+    cursor: default;
+    letter-spacing: 0.1em;
+}
+#title {
+    position: absolute;
+    left: 20px;
+    top: 1em;
+    font-size: 24px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    max-width: 70%;
+}
+svg {
+    position: relative;
+}
+
+#meeting-point-info {
+    position: absolute;
+    letter-spacing: 0.2em;
+    bottom: 6em;
+    left: 10px;
+    padding: 0.4em;
+}
+
+#meeting-point-id {
+    font-size: 18px;
+    line-height: 20px;
+    margin: 5px 0px;
+}
+
+.slider-dark {
+    background: white;
+    height: 1px;
+    width: 140px;
+}
+
+.slider-dark::-moz-range-thumb {
+    width:10px;
+    height: 10px;
+    background: white;
+    cursor: pointer;
+    border-width: 2px;
+
+}
+
+.slider-light {
+    background: black;
+    height: 1px;
+}
+
+.slider-light::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    background: black;
+    cursor: pointer;
+    border-width: 2px;
+
+}
+
+.switch {
+   position: absolute;
+   display: inline-block;
+   top: 4px;
+   left: 115px;
+   width: 34px;
+   height: 19px; 
+}
+
+.switch input {
+    display: none;
+}
+
+.slider-switch {
+    margin: auto 0px;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color:rgba(0, 0, 0, 0.301);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider-switch:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 2px;
+    bottom: 2px;
+    background-color: rgb(212, 212, 212);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider-switch {
+    background-color:rgba(56, 56, 56, 0.719);
+}
+
+input:checked + .slider-switch:before {
+    -webkit-transform: translateX(15px);
+    -ms-transform: translateX(15px);
+    transform: translateX(15px);
+  }
+   
+
+.slider-switch.round {
+    border-radius: 34px;
+    background-color: rgb(66, 66, 66)
+  }
+   
+  .slider-switch.round:before {
+    border-radius: 50%;
+  }
+
+  .small {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+}
+
+#zone-selector {
+    border-radius: 1rem;
+    border: solid;
+    background-color:rgba(0, 0, 0, 0);
+    width: 100px;
+}
+
+#zone-selector:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+  }
+
+
+  #pie-chart {
+      margin: 0 auto;
+      width: 100px;
+      height: 100px;
+  }
