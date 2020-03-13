@@ -11,7 +11,7 @@ let newLayer,
     svg,
     g;
 
-let simRatio = 100;
+let simRatio = 250;
 loadMap();
 loadData();
 reset();
