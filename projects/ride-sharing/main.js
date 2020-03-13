@@ -145,7 +145,7 @@ function animateAllTrips() {
     trips = tripsCollection.trips;
     
     //trips = [tripsCollection.trips[2]];
-    //q.defer(startTimer);
+    q.defer(startTimer);
     trips.forEach(function (trip) {
         if (trip.walk.length == 0 && trip.ride.length == 0) {
             // user request scooter and there is none available
