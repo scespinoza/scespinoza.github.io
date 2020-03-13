@@ -145,12 +145,23 @@ function animateAllTrips() {
     trips = tripsCollection.trips;
     
     //trips = [tripsCollection.trips[2]];
-    q.defer(startTimer);
+    //q.defer(startTimer);
     trips.forEach(function (trip) {
-        if (trip.walk.length == 0) {
+        if (trip.walk.length == 0 && trip.ride.length == 0) {
+            // user request scooter and there is none available
             q.defer(animateUnsatisfiedRequest, trip.origin, trip.arrival_time);
         }
-        else if (trip.ride.length == 0) {
+        else if (trip.walk.length == 0 && trip.ride.length > 0) {
+            // user request scooter in the same place where there is an available scooter
+            shortestPathRide =[]
+            trip.ride.forEach(function(osmid) {
+                shortestPathRide.push(edgesCollection.features.find(edge => edge.properties.osmid == osmid));
+            });
+            q.defer(animateRide, shortestPathRide, 0, trip.pickup_time, trip.scooter);
+        }
+        else if (trip.walk.length > 0 && trip.ride.length == 0) {
+            // user walks towards an available scooter but when arrives
+            // it is not available anymore
             shortestPathWalk =[]
             trip.walk.forEach(function(osmid) {
                 shortestPathWalk.push(edgesCollection.features.find(edge => edge.properties.osmid == osmid));
@@ -158,11 +169,12 @@ function animateAllTrips() {
             q.defer(animateWalk, shortestPathWalk, 0, trip.arrival_time);
             q.defer(animateUnsatisfiedRequest, trip.pickup_node, trip.pickup_time);
         } else {
+            // user walks and picks up an scooter
             q.defer(animateTrip,trip, trip.arrival_time);
         }
         
     });
-    });
+});
     
 }
 
@@ -176,6 +188,13 @@ function startTimer (callback) {
 function animateWalkDeferred(path, ipath, delay, callback) {
     setTimeout(function () {
         animateWalk(path, ipath, 0);
+        callback(null);
+    }, delay * 1000 / simRatio);
+}
+
+function animateRideDeferred(path, ipath, delay, scooter, callback) {
+    setTimeout(function () {
+        animateRide(path, ipath, 0, scooter);
         callback(null);
     }, delay * 1000 / simRatio);
 }
@@ -232,7 +251,7 @@ function locateScooters() {
    
 }
 function animateTrip(trip, delay, callback)  {
-
+    
     setTimeout(function () {
     shortestPathWalk =[]
     trip.walk.forEach(function(osmid) {
@@ -256,6 +275,7 @@ function animateTrip(trip, delay, callback)  {
 }
 
 function animateWalk(path, ipath, delay)  {
+    
     var currentEdge = path[ipath];
     var edge = g.append("path")
                 .attr("id", function () {
@@ -285,7 +305,6 @@ function animateWalk(path, ipath, delay)  {
 
                     })
                     .on("start", function() {
-                        console.log("animating walk");
                         d3.select(this).attr("r", 3);
                     })
                     .on("end", function () {
