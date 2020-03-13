@@ -11,14 +11,14 @@ let newLayer,
     svg,
     g;
 
-let simRatio = 250;
+let simRatio = 500;
 loadMap();
 loadData();
 reset();
 map.on('zoom', reset);
 map.on('viewreset', reset);
 
-
+/*
 // -- Worker script test --
 //Testing if the browser supports workers
 if (typeof (Worker) !== "undefined") {
@@ -36,7 +36,7 @@ timerWorker.addEventListener("message", function (event) {
         $("#timer").html(data[1]);
     }
 });
-
+*/
 function projectPoint(x, y) {
     var point = map.latLngToLayerPoint(new L.LatLng(y, x));
     this.stream.point(point.x, point.y);
@@ -145,22 +145,54 @@ function animateAllTrips() {
     trips = tripsCollection.trips;
     
     //trips = [tripsCollection.trips[2]];
-    q.defer(startTimer);
+    var t = startTimer();
 
     trips.forEach(function(trip) {
         q.defer(animateTrip, trip, trip.arrival_time);
+    })
+
+    q.await(function () {
+        t.stop();
     })
     
 });
     
 }
 
-function startTimer (callback) {
-    setTimeout(function() {
-        timerWorker.postMessage(["timerInit", simRatio]);
-        callback();
-    }, 0);
+function dhm(t){
+    var days = [
+        'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+    ]
+    var cd = 24 * 60 * 60 * 1000,
+        ch = 60 * 60 * 1000,
+        d = Math.floor(t / cd),
+        h = Math.floor( (t - d * cd) / ch),
+        m = Math.round( (t - d * cd - h * ch) / 60000),
+        pad = function(n){ return n < 10 ? '0' + n : n; };
+  if( m === 60 ){
+    h++;
+    m = 0;
+  }
+  if( h === 24 ){
+    d++;
+    h = 0;
+  }
+  return days[d] + ' ' + [pad(h), pad(m)].join(':');
 }
+
+
+function startTimer() {
+    var t = d3.timer(function (elapsed) {
+        
+        var returnStr = dhm(elapsed * simRatio);
+
+        //console.log(elapsed + ': '+ returnStr);
+        $("#timer").html(returnStr);
+    }, 100)
+    return t;
+}
+
+
 
 function animateWalkDeferred(path, ipath, delay, callback) {
     setTimeout(function () {
@@ -228,7 +260,7 @@ function locateScooters() {
 function animateTrip(trip, delay, callback)  {
     
     
-    setTimeout(function () {
+    d3.timeout(function (elapsed) {
         console.log("time: " + Math.floor(trip.arrival_time / 3600) + ':' + Math.floor((trip.arrival_time % 3600) / 60))
         if (trip.walk.length == 0 && trip.ride.length == 0) {
             // user request scooter and there is none available
@@ -268,8 +300,7 @@ function animateTrip(trip, delay, callback)  {
             animateWalk(shortestPathWalk, 0, 0);
             animateRide(shortestPathRide, 0, ride_delay, scooter);
         }
-    
-    callback(null);
+        callback(null);
     }, delay * 1000 / simRatio)
     
 }
