@@ -11,7 +11,7 @@ let newLayer,
     svg,
     g;
 
-let simRatio = 1000;
+let simRatio = 100;
 loadMap();
 loadData();
 reset();
@@ -229,7 +229,7 @@ function animateTrip(trip, delay, callback)  {
     
     
     setTimeout(function () {
-
+        console.log("time: " + Math.floor(trip.arrival_time / 3600) + ':' + Math.floor((trip.arrival_time % 3600) / 60))
         if (trip.walk.length == 0 && trip.ride.length == 0) {
             // user request scooter and there is none available
             animateUnsatisfiedRequest(trip.origin, 0);
