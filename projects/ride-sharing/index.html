@@ -23,44 +23,9 @@
     </div>
     <div class="user-interface">
         <h1 id="title">Austin Scooter Sharing Simulation</h1>
-        <div class="container" id="switch-container">
-            <div id="interface-mode" class="switch-block top-block">
-                <span class="control-panel-text small">DARK MODE</span>
-                <label class="switch">
-                    <input id="dark-check-box" type="checkbox" onclick="" autocomplete="off">
-                    <div class="slider-switch round"></div>
-                </label>
-            </div>
-            <div id="display-street" class="switch-block">
-                    <span class="control-panel-text small">SHOW STREETS</span>
-                    <label class="switch">
-                        <input type="checkbox" onclick="" autocomplete="off">
-                        <div class="slider-switch round"></div>
-                    </label>
-                </div>
-            <div id="display-street-names" class="switch-block">
-                <span class="control-panel-text small">HIDE NAMES</span>
-                <label class="switch">
-                    <input id="names-check-box" type="checkbox" onclick="" autocomplete="off">
-                    <div class="slider-switch round"></div>
-                </label>
-            </div>
-            <div id="select-zone" class="switch-block">
-                <span class="control-panel-text small">ZONE</span>
-                <select class="control-panel-text small" name="zone-selector" id="zone-selector" onchange="loadHouseholdPoints(this.value);" autocomplete="off">
-                    <option value="all">All</option>
-                    <option value="north">North</option>
-                    <option value="center">Center</option>
-                    <option value="south">South</option>
-                </select>
-            </div>
-        
-        
-        </div>
-        <div id="meeting-point-info">
-            <p id="meeting-point-id"></p>
-            <h3 id="saved-counter"></h3>
-        </div>
+       
+            
+       
         <div id="timer-container">
                 <span id="time-label" class="control-panel-text big">Time</span>
                 <h3 class="control-panel-text" id="timer">00:00</h3>
@@ -69,13 +34,7 @@
         
         <div id='control-panel'>
             <button id="play-controller" class="control-panel-text control-panel-button" onclick="animateAllTrips()">PLAY</button>
-            <button id="pause-controller" class="control-panel-text control-panel-button" onclick="">PAUSE</button>
-            <span id="velocity-label" class="control-panel-text">VELOCITY</span>
-            
-            <input type="range" min="1" max="50" value="10" class="slider-light" id="simratio-slider"
-                     onchange="" autocomplete="off">
-
-            <span  id="velocity-display" class="control-panel-text">x10</span>
+           
             
         </div>
 

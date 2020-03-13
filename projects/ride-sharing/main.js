@@ -11,7 +11,7 @@ let newLayer,
     svg,
     g;
 
-let simRatio = 500;
+let simRatio = 300;
 loadMap();
 loadData();
 reset();
@@ -118,30 +118,52 @@ function reset() {
 
 let edgesCollection,
     tripsCollection,
-    nodesCollection;
+    nodesCollection,
+    scooterLocations;
 
 function loadData() {
 
     Promise.all([
         d3.json('data/edges.geojson'),
         d3.json('data/nodes.geojson'),
-        d3.json('data/test.json')
+        d3.json('data/test.json'),
     ])
    .then(function (data) {
         edgesCollection = data[0];
         nodesCollection = data[1];
         tripsCollection = data[2];
+        scooterLocations = locateScooters();
         console.log("Done");
     });
     
 }
 
+function locateScooters() {
+    return new Promise(function (resolve, reject) {
+        d3.json('data/scooter_locations.json').then(function (scootersCollection){
+            var scooterLocations = nodesCollection.features.filter(node => scootersCollection.includes(node.properties.osmid));
+            g.selectAll('circle')
+                .data(scooterLocations)
+                .enter()
+                .append("circle")
+                .attr("r", 2)
+                .attr("class", "static-scooter")
+                .attr("id", function(d) {
+                    return "scooter-" + (scootersCollection.indexOf(d.properties.osmid) + 1);
+                })
+                .attr("transform", function (d) {
+                    var p = applyLatLngToLayer(d.geometry.coordinates);
+                    return 'translate(' + p.x + ', ' + p.y + ')';
+                });
+            resolve(scooterLocations)
+        }) 
+    })
+   
+}
+
 function animateAllTrips() {
-    Promise.all([
-        locateScooters()
-    ]).then(function(data) {
+   
     var q = d3.queue();
-    scooterLocations = data[0]
     trips = tripsCollection.trips;
     
     //trips = [tripsCollection.trips[2]];
@@ -154,8 +176,6 @@ function animateAllTrips() {
     q.await(function () {
         t.stop();
     })
-    
-});
     
 }
 
@@ -192,22 +212,6 @@ function startTimer() {
     return t;
 }
 
-
-
-function animateWalkDeferred(path, ipath, delay, callback) {
-    setTimeout(function () {
-        animateWalk(path, ipath, 0);
-        callback(null);
-    }, delay * 1000 / simRatio);
-}
-
-function animateRideDeferred(path, ipath, delay, scooter, callback) {
-    setTimeout(function () {
-        animateRide(path, ipath, 0, scooter);
-        callback(null);
-    }, delay * 1000 / simRatio);
-}
-
 function animateUnsatisfiedRequest(osmid, delay) {
     
         node = nodesCollection.features.find(node => node.properties.osmid == osmid);
@@ -235,33 +239,12 @@ function animateUnsatisfiedRequest(osmid, delay) {
     
 }
 
-function locateScooters() {
-    return new Promise(function (resolve, reject) {
-        d3.json('data/scooter_locations.json').then(function (scootersCollection){
-            var scooterLocations = nodesCollection.features.filter(node => scootersCollection.includes(node.properties.osmid));
-            g.selectAll('circle')
-                .data(scooterLocations)
-                .enter()
-                .append("circle")
-                .attr("r", 2)
-                .attr("class", "static-scooter")
-                .attr("id", function(d) {
-                    return "scooter-" + (scootersCollection.indexOf(d.properties.osmid) + 1);
-                })
-                .attr("transform", function (d) {
-                    var p = applyLatLngToLayer(d.geometry.coordinates);
-                    return 'translate(' + p.x + ', ' + p.y + ')';
-                });
-            resolve(scooterLocations)
-        }) 
-    })
-   
-}
+
 function animateTrip(trip, delay, callback)  {
     
     
     d3.timeout(function (elapsed) {
-        console.log("time: " + Math.floor(trip.arrival_time / 3600) + ':' + Math.floor((trip.arrival_time % 3600) / 60))
+        
         if (trip.walk.length == 0 && trip.ride.length == 0) {
             // user request scooter and there is none available
             animateUnsatisfiedRequest(trip.origin, 0);
@@ -336,7 +319,7 @@ function animateWalk(path, ipath, delay)  {
 
                     })
                     .on("start", function() {
-                        d3.select(this).attr("r", 3);
+                        d3.select(this).attr("r", 2);
                     })
                     .on("end", function () {
                         d3.select(this).remove()                        
@@ -395,68 +378,3 @@ function animateRide(path, ipath, delay, scooter) {
                     })
 }
 
-function animateShortestPath(shortestPath, ipath, pathClass, delay, scooter) {
-    
-    var currentEdge = shortestPath[ipath];
-    
-    var edge = g.append("path")
-                .attr("id", function () {
-                    return "edge-" + currentEdge.properties.osmid;
-                })
-                .attr("class", pathClass)
-                .attr("d", function(){
-                    return d3Path(currentEdge.geometry);
-                })
-    
-   
-        var circle = g.append("circle")
-                .transition()
-                .delay(function() {
-                    return 1000 * delay;
-                })
-                .duration(function() {
-                    if (pathClass == "walk") {
-                        velocity = 1.5;
-                    } else {
-                        velocity = 5;
-                    }
-                    return (1000 * currentEdge.properties.length / velocity) / simRatio;
-                })
-                .ease(d3.easeLinear)
-                .attrTween("transform", function () {
-                    return function(t) {
-                        var pathLength = edge.node().getTotalLength();
-                        var p = edge.node().getPointAtLength(t * pathLength);
-                        return 'translate(' + p.x + ', ' + p.y + ')';
-                    }
-
-                })
-                .on("start", function() {
-                    d3.select(this).attr("r", 3)
-                        .attr("class", function() {
-                        if (pathClass == "walk") {
-                            return "user";
-                        } else {
-                            return "scooter";
-                        }
-                    });
-                })
-                .on("end", function () {
-                    
-                    
-                    if (ipath < shortestPath.length - 1) {
-                        animateShortestPath(shortestPath, ipath + 1, pathClass, 0, scooter);
-                    } else {
-                        
-                        g.select("circle#scooter-" + scooter)
-                            .attr("transform", function (){
-                        
-                                return d3.select(this).attr("transform")}
-                                );
-                    }
-                    d3.select(this).remove()
-                    d3.select("path#edge-" + currentEdge.properties.osmid).remove()
-                   
-                })
-    
-}
