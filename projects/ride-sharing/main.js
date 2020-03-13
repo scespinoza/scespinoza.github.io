@@ -146,34 +146,11 @@ function animateAllTrips() {
     
     //trips = [tripsCollection.trips[2]];
     q.defer(startTimer);
-    trips.forEach(function (trip) {
-        if (trip.walk.length == 0 && trip.ride.length == 0) {
-            // user request scooter and there is none available
-            q.defer(animateUnsatisfiedRequest, trip.origin, trip.arrival_time);
-        }
-        else if (trip.walk.length == 0 && trip.ride.length > 0) {
-            // user request scooter in the same place where there is an available scooter
-            shortestPathRide =[]
-            trip.ride.forEach(function(osmid) {
-                shortestPathRide.push(edgesCollection.features.find(edge => edge.properties.osmid == osmid));
-            });
-            q.defer(animateRide, shortestPathRide, 0, trip.pickup_time, trip.scooter);
-        }
-        else if (trip.walk.length > 0 && trip.ride.length == 0) {
-            // user walks towards an available scooter but when arrives
-            // it is not available anymore
-            shortestPathWalk =[]
-            trip.walk.forEach(function(osmid) {
-                shortestPathWalk.push(edgesCollection.features.find(edge => edge.properties.osmid == osmid));
-            });
-            q.defer(animateWalk, shortestPathWalk, 0, trip.arrival_time);
-            q.defer(animateUnsatisfiedRequest, trip.pickup_node, trip.pickup_time);
-        } else {
-            // user walks and picks up an scooter
-            q.defer(animateTrip,trip, trip.arrival_time);
-        }
-        
-    });
+
+    trips.forEach(function(trip) {
+        q.defer(animateTrip, trip, trip.arrival_time);
+    })
+    
 });
     
 }
@@ -199,8 +176,8 @@ function animateRideDeferred(path, ipath, delay, scooter, callback) {
     }, delay * 1000 / simRatio);
 }
 
-function animateUnsatisfiedRequest(osmid, delay, callback) {
-    setTimeout(function() {
+function animateUnsatisfiedRequest(osmid, delay) {
+    
         node = nodesCollection.features.find(node => node.properties.osmid == osmid);
     
         g.selectAll('circle.unsatisfied-requests')
@@ -214,7 +191,7 @@ function animateUnsatisfiedRequest(osmid, delay, callback) {
                 return 'translate(' + p.x + ', ' + p.y + ')';
             })
             .transition()
-            .delay(0)
+            .delay(1000 * delay / simRatio)
             .duration(2000)
             .ease(d3.easeLinear)
             .attr("r", 7)
@@ -223,8 +200,6 @@ function animateUnsatisfiedRequest(osmid, delay, callback) {
                 d3.select(this).remove()
             })
 
-        callback(null);
-    }, delay * 1000 / simRatio);
     
 }
 
@@ -252,23 +227,48 @@ function locateScooters() {
 }
 function animateTrip(trip, delay, callback)  {
     
+    
     setTimeout(function () {
-    shortestPathWalk =[]
-    trip.walk.forEach(function(osmid) {
-        shortestPathWalk.push(edgesCollection.features.find(edge => edge.properties.osmid == osmid));
-    })
 
-    
-    
-    shortestPathRide =[]
-    trip.ride.forEach(function(osmid) {
-        shortestPathRide.push(edgesCollection.features.find(edge => edge.properties.osmid == osmid));
-    })
+        if (trip.walk.length == 0 && trip.ride.length == 0) {
+            // user request scooter and there is none available
+            animateUnsatisfiedRequest(trip.origin, 0);
+        }
+        else if (trip.walk.length == 0 && trip.ride.length > 0) {
+            // user request scooter in the same place where there is an available scooter
+            shortestPathRide =[]
+            trip.ride.forEach(function(osmid) {
+                shortestPathRide.push(edgesCollection.features.find(edge => edge.properties.osmid == osmid));
+            });
+            animateRide(shortestPathRide, 0, 0, trip.scooter);
+        }
+        else if (trip.walk.length > 0 && trip.ride.length == 0) {
+            // user walks towards an available scooter but when arrives
+            // it is not available anymore
+            shortestPathWalk =[]
+            trip.walk.forEach(function(osmid) {
+                shortestPathWalk.push(edgesCollection.features.find(edge => edge.properties.osmid == osmid));
+            });
+            animateWalk(shortestPathWalk, 0, 0);
+            animateUnsatisfiedRequest(trip.pickup_node, trip.pickup_time - trip.arrival_time);
+        } else {
+            // user walks and picks up an scooter
+            shortestPathWalk =[]
+            trip.walk.forEach(function(osmid) {
+                shortestPathWalk.push(edgesCollection.features.find(edge => edge.properties.osmid == osmid));
+            })
+            
+            shortestPathRide =[]
+            trip.ride.forEach(function(osmid) {
+                shortestPathRide.push(edgesCollection.features.find(edge => edge.properties.osmid == osmid));
+            })
 
-    scooter = trip.scooter;
-    ride_delay = trip.pickup_time - trip.arrival_time;
-    animateWalk(shortestPathWalk, 0, 0);
-    animateRide(shortestPathRide, 0, ride_delay, scooter);
+            scooter = trip.scooter;
+            ride_delay = trip.pickup_time - trip.arrival_time;
+            animateWalk(shortestPathWalk, 0, 0);
+            animateRide(shortestPathRide, 0, ride_delay, scooter);
+        }
+    
     callback(null);
     }, delay * 1000 / simRatio)
     
