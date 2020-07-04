@@ -527,7 +527,7 @@ function animateAllTrips() {
     }
    
     q = d3.queue();
-    trips = [tripsCollection.trips[30]];
+    trips = tripsCollection.trips;
     
     //trips = [tripsCollection.trips[2]];
     var t = startTimer();
