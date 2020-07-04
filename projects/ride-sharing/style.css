@@ -24,7 +24,9 @@
 
 #map {
     height: 100%;
+    width: 100%;
     margin: 0;
+    position: absolute;
 }
 
 
@@ -76,7 +78,7 @@
     width: 80%;
     height: 20%;
     left:10%;
-    top: 65%;
+    top: 55%;
     text-align: center;
 }
 
@@ -87,10 +89,14 @@
     font-weight: normal;
 }
 .big {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
 }
 
+#graph-info {
+    position: absolute;
+    left: 240px;
+}
 
 .control-panel-button {
     display: inline-block;
@@ -132,7 +138,7 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     max-width: 70%;
-    color: #343E3D
+    color: rgb(133, 133, 133);
 }
 
 #subtitle {
@@ -288,3 +294,32 @@ input:checked + .slider-switch:before {
   .play-controller {
       cursor: pointer;
   }
+
+
+  .icon {
+    float: right;
+    margin-right: 10px;
+    /* ... */
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    padding: .5rem;
+    background: #AEDCC0;
+    color: #313639;
+    border: 0px solid #313639;
+    border-radius: 2px;
+    pointer-events: none;
+    font-size: 0.6rem;
+    font-size:11px;
+}
+
+.loading-background {
+    background-color: black;
+    z-index: 10;
+    position: absolute;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}

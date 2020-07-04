@@ -10,7 +10,7 @@
     fill: none;
 }
 
-.bounds {
+.boundary {
     stroke: #7BD389;
     stroke-width:2px;
     fill: none;
@@ -42,8 +42,14 @@
 .static-scooter {
     stroke: rgba(25, 253, 4, 0.644);
     stroke-width: 3px;
-    opacity: 0.7;
-    
+    opacity: 0.3;
+    cursor: pointer;
+}
+
+.static-scooter:hover {
+    stroke: rgba(25, 253, 4, 1);
+    opacity: 1;
+    cursor: pointer;
 }
 
 .unsatisfied-request {
